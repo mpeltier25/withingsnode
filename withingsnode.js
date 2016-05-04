@@ -6,7 +6,6 @@ var writebloodstream=fs.createWriteStream("myblood.csv");
 writemeasurestream.write("User");
 writemeasurestream.write(", Date");
 writemeasurestream.write(", Weight");
-writemeasurestream.write(", Body fat ratio");
 writeactivitystream.write("User");
 writeactivitystream.write(", Date");
 writeactivitystream.write(", Steps");
@@ -86,12 +85,9 @@ function processUser(user, option) {
 									writemeasurestream.write(","+new Date(parseInt(responsestring.body.measuregrps[0].date)*1000)).toString();
 									writebloodstream.write(","+new Date(parseInt(responsestring.body.measuregrps[0].date)*1000)).toString();
 									for (var prop in responsestring.body.measuregrps){
-										if(responsestring.body.measuregrps[count].measures[0].type=="1" && responsestring.body.measuregrps[count].measures[0].unit =="-2"){
-												writemeasurestream.write(","+JSON.stringify(responsestring.body.measuregrps[count].measures[0].value) * (Math.pow(10, responsestring.body.measuregrps[count].measures[0].unit)));
+										if(responsestring.body.measuregrps[count].measures[0].type=="1"){
+												writemeasurestream.write(","+JSON.stringify(responsestring.body.measuregrps[count].measures[0].value) * (Math.pow(10, responsestring.body.measuregrps[count].measures[0].unit))+"\n ,");
 											}
-										if (responsestring.body.measuregrps[0].measures[count] && responsestring.body.measuregrps[count].measures[0].type != "1" &&responsestring.body.measuregrps[count].measures[0].type != "4"&&responsestring.body.measuregrps[count].measures[0].type != "5"&&responsestring.body.measuregrps[count].measures[0].type != "8"&&responsestring.body.measuregrps[count].measures[0].type != "9"&&responsestring.body.measuregrps[count].measures[0].type != "10"&&responsestring.body.measuregrps[count].measures[0].type != "11"&&responsestring.body.measuregrps[count].measures[0].type != "54") {
-											writemeasurestream.write(","+JSON.stringify(responsestring.body.measuregrps[count].measures[0].value));
-										}
 											if (responsestring.body.measuregrps[0].measures[count] && responsestring.body.measuregrps[count].measures[0].type != "4"&&responsestring.body.measuregrps[count].measures[0].type != "5"&&responsestring.body.measuregrps[count].measures[0].type != "6"&&responsestring.body.measuregrps[count].measures[0].type != "8"&&responsestring.body.measuregrps[count].measures[0].type != "54") {
 												writebloodstream.write("," + responsestring.body.measuregrps[0].measures[count].value);
 											}
