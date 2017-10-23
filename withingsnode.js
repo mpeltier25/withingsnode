@@ -32,8 +32,8 @@ function processUser(user, option) {
 	console.log("PROCESSING " + user.Userid);
 	var oauth = require("oauth");
 		var withings = new oauth.OAuth(
-			"https://oauth.withings.com/account/request_token",
-			"https://oauth.withings.com/account/access_token",
+			"https://developer.health.nokia.com/account/request_token",
+			"https://developer.health.nokia.com/account/access_token",
 			user.ckey,
 			user.csecret,
 			"1.0",
@@ -41,7 +41,7 @@ function processUser(user, option) {
 			"HMAC-SHA1"
 		);
 		if(option=="getactivity"||option=="getall"){
-					var url = withings.signUrl("http://wbsapi.withings.net/v2/measure?action=getactivity&userid=" + user.Userid, user.otoken, user.osecret);
+					var url = withings.signUrl("https://api.health.nokia.com/v2/measure?action=getactivity&userid=" + user.Userid, user.otoken, user.osecret);
 					withings.get(url, null, null, function(error, response) { 
 								responsestring=JSON.parse(response);
 								var count=0;
@@ -74,7 +74,7 @@ function processUser(user, option) {
 						});
 				}
 		if(option=="getmeas"||option=="getall"){
-					var url = withings.signUrl("http://wbsapi.withings.net/measure?action=getmeas&userid=" + user.Userid, user.otoken, user.osecret);
+					var url = withings.signUrl("https://api.health.nokia.com/measure?action=getmeas&userid=" + user.Userid, user.otoken, user.osecret);
 					withings.get(url, null, null, function(error, response) { 
 							console.log(response);
 							responsestring=JSON.parse(response);
@@ -111,7 +111,7 @@ function processUser(user, option) {
 						});
 				}
 		if(option=="getsleep"||option=="getall"){
-			var url = withings.signUrl("https://wbsapi.withings.net/v2/sleep?action=getsummary&userid=" + user.Userid, user.otoken, user.osecret);
+			var url = withings.signUrl("https://api.health.nokia.com/v2/sleep?action=getsummary&userid=" + user.Userid, user.otoken, user.osecret);
 			withings.get(url, null, null, function(error, response) {
 					responsestring=JSON.parse(response);
 					var count=0;
